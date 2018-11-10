@@ -1,5 +1,5 @@
 #pragma once
-
+enum LoopStyle { Standard, Other };
 #include "pch.h"
 void doNothing() { return; }
 int returnSeven() { return 7; }
