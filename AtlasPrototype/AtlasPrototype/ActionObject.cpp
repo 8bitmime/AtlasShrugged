@@ -29,7 +29,11 @@ class ActionObject
 		int minSuccess;
 
 	ActionObject() {
-		//default constructor
+		//Default constructor
+		ptrActionFunction = (NULL);
+		resultList = std::list<PairInt>{};
+		minSuccess = 1;
+
 	}
 
 	ActionObject(bool(*givenPointer)(), std::list<PairInt> list, int ms) {
