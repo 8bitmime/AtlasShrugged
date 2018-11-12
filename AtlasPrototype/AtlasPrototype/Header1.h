@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 enum LoopStyle { Standard, Other };
 #include "pch.h"
 #include "ActionObject.cpp"
