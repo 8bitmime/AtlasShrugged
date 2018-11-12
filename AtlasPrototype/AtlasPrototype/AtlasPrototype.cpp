@@ -7,7 +7,7 @@
 //enum LoopStyle { Standard, Other };
 
 bool returnTrue() {
-	std::cout << "you called true!";
+	std::cout << "you called true!\n";
 	return true;
 }
 
