@@ -21,17 +21,14 @@ bool runMe(bool (*function) ()) {
 
 
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexes) {
-	/*
-	if (style == Standard) {
-		for (ActionObject obj : listActions) {
-			(*obj.ptrActionFunction)();
-		}
-	} */
 	if (style == Standard) {
 		int actionIndex = 0;
-		while ((size_t)actionIndex < listActions.size()) {
-			//perform action
+		while ((size_t)actionIndex < listActions.size()) { //cast because size is unsigned
+
+			//get actionobject
 			ActionObject ao = getEltAt(actionIndex, listActions);
+
+			//call function until action is done, store return val
 			int jmpVal = ao.runFunction();
 
 			if (actionIndex + jmpVal < 0) {
