@@ -15,27 +15,46 @@ bool returnFalse() {
 	return false;
 }
 
+int globFOT = 0;
+bool failOnThirds() {
+	globFOT++;
+	bool value = false;
+	if (globFOT % 3 == 0 && globFOT < 16) {
+		value = false;
+	}
+	else {
+		value = true;
+	}
+	std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n";
+	return value;
+}
+
 bool runMe(bool (*function) ()) {
 	return (*function)();
 }
 
 
+
+
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexes) {
 	if (style == Standard) {
 		int actionIndex = 0;
-		while ((size_t)actionIndex < listActions.size()) { //cast because size is unsigned
+		while ((size_t)actionIndex < listActions.size()-1) { //cast because size is unsigned
 
 			//get actionobject
 			ActionObject ao = getEltAt(actionIndex, listActions);
 
 			//call function until action is done, store return val
+			//std::cout << "Calling function with index " << actionIndex << "\n";
 			int jmpVal = ao.runFunction();
 
-			if (actionIndex + jmpVal < 0) {
-				throw std::runtime_error("Tried to go back before start");
+			if (actionIndex - jmpVal < 0) {
+				std::cout << "Tried to go back before start";
+				//throw std::runtime_error("Tried to go back before start");
+				actionIndex = 0;
 			}
 			else {
-				actionIndex = actionIndex + jmpVal;
+				actionIndex = actionIndex - jmpVal;
 			}
 		}
 	}
@@ -48,7 +67,8 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 	std::list<ActionObject> tempList = listAO;
 	if ((size_t)a >= listAO.size() - 1) {
-		throw std::runtime_error("index out of bound");
+		std::cout << "index out of bound1";
+		throw std::runtime_error("index out of bound1");
 	}
 	else {
 		for (int i = 0; i < a; i++) {
@@ -61,7 +81,8 @@ ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 int getEltAt(int a, std::list<int> listInt) {
 	std::list<int> tempList = listInt;
 	if ((size_t)a >= listInt.size()-1) {
-		throw std::runtime_error("index out of bound");
+		std::cout << "index out of bound2";
+		throw std::runtime_error("index out of bound2");
 	}
 	else {
 		for (int i = 0; i < a; i++) {
@@ -81,7 +102,7 @@ int main()
 	PairInt pair1(2, 2);
 	PairInt pair2(4, 5);
 	std::list<PairInt> lpairs = { pair1, pair2 };
-	ActionObject myObject2(pointerToReturnTrue, lpairs, 5);
+	ActionObject myObject2(pointerToReturnTrue, lpairs, 1);
 	myObject2.printValues();
 	//atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
 	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
@@ -89,6 +110,22 @@ int main()
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	myObject2.runFunction();
+	
+	bool(*pointerToFailThirds)();
+	pointerToFailThirds = &failOnThirds;
+	PairInt pair11(1, 1);
+	PairInt pair21(2, 1);
+	PairInt pair22(2, 2);
+	std::list<PairInt> lpairs2 = { pair11, pair21, pair22 };
+	ActionObject myObject3(pointerToFailThirds, lpairs2, 3);
+
+	ActionObject myObject4 = myObject2;
+	ActionObject myObject5 = myObject2;
+	//std::cout << "startets\n";
+	atlasLoop(Standard, std::list<ActionObject>{myObject2, myObject4, myObject3, myObject5}, std::list<int>{});
+
+
+
 	
 }
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

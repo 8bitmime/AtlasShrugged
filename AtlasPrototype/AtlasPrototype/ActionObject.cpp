@@ -47,6 +47,8 @@ class ActionObject
 		numFailures = 0;
 		numSuccess = 0;
 	}
+
+
 	void printEachPair() {
 		for (PairInt p : resultList) {
 			p.printLessVerbose();
@@ -82,18 +84,22 @@ class ActionObject
 			if (tempNumSuccess >= minSuccess) {
 				doneRunning = true;
 				returnInt = -1;
+				//std::cout << "Success: Finished with jumpback " << returnInt << "\n";
 			}
 
 			//If this call of runfunction has hit the first num in the list of pairs of failures, return the jumpback that that pair gives
-			if (resultList.size() > 0 &&tempNumFailures == resultList.front().failNum) {
+			if (resultList.size() > 0 && tempNumFailures == resultList.front().failNum) {
+				doneRunning = true;
 				PairInt thisPair = resultList.front();
 				resultList.pop_front();
 				returnInt = thisPair.resultJump;
+				//std::cout << "Failed: Finished with jumpback " << returnInt << "\n";
 
 			}
 		}
-		numFailures += tempNumFailures;
-		numSuccess += tempNumSuccess;
+		// numFailures += tempNumFailures;
+		//numSuccess += tempNumSuccess;
+
 		return returnInt;
 	}
 };
