@@ -1,3 +1,5 @@
+thing
+a.out
 
 # Created by https://www.gitignore.io/api/linux,visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=linux,visualstudio,visualstudiocode
