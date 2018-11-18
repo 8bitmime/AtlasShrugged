@@ -21,10 +21,25 @@ bool runMe(bool (*function) ()) {
 
 
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexes) {
-
+	/*
 	if (style == Standard) {
 		for (ActionObject obj : listActions) {
 			(*obj.ptrActionFunction)();
+		}
+	} */
+	if (style == Standard) {
+		int actionIndex = 0;
+		while ((size_t)actionIndex < listActions.size()) {
+			//perform action
+			ActionObject ao = getEltAt(actionIndex, listActions);
+			int jmpVal = ao.runFunction();
+
+			if (actionIndex + jmpVal < 0) {
+				throw std::runtime_error("Tried to go back before start");
+			}
+			else {
+				actionIndex = actionIndex + jmpVal;
+			}
 		}
 	}
 	else if (style == Other) {
@@ -35,7 +50,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 
 ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 	std::list<ActionObject> tempList = listAO;
-	if (a >= listAO.size() - 1) {
+	if ((size_t)a >= listAO.size() - 1) {
 		throw std::runtime_error("index out of bound");
 	}
 	else {
@@ -48,7 +63,7 @@ ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 
 int getEltAt(int a, std::list<int> listInt) {
 	std::list<int> tempList = listInt;
-	if (a >= listInt.size()-1) {
+	if ((size_t)a >= listInt.size()-1) {
 		throw std::runtime_error("index out of bound");
 	}
 	else {
@@ -71,12 +86,13 @@ int main()
 	std::list<PairInt> lpairs = { pair1, pair2 };
 	ActionObject myObject2(pointerToReturnTrue, lpairs, 5);
 	myObject2.printValues();
-	atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
+	//atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
 	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
 
-	std::cout << listInts.size() << " " << getEltAt(4, listInts);
+	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
+	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
+	myObject2.runFunction();
 	
-	//atlasLoop(Standard, )
 }
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
