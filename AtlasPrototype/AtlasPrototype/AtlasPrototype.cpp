@@ -33,6 +33,32 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 	return true;
 }
 
+ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
+	std::list<ActionObject> tempList = listAO;
+	if (a >= listAO.size() - 1) {
+		throw std::runtime_error("index out of bound");
+	}
+	else {
+		for (int i = 0; i < a; i++) {
+			tempList.pop_front();
+		}
+	}
+	return tempList.front();
+}
+
+int getEltAt(int a, std::list<int> listInt) {
+	std::list<int> tempList = listInt;
+	if (a >= listInt.size()-1) {
+		throw std::runtime_error("index out of bound");
+	}
+	else {
+		for (int i = 0; i < a; i++) {
+			tempList.pop_front();
+		}
+	}
+	return tempList.front();
+}
+
 int main()
 {
 	std::cout << "Hello World!\n";
@@ -46,7 +72,9 @@ int main()
 	ActionObject myObject2(pointerToReturnTrue, lpairs, 5);
 	myObject2.printValues();
 	atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
+	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
 
+	std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	
 	//atlasLoop(Standard, )
 }
