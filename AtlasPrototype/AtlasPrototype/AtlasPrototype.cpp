@@ -51,12 +51,26 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 			//std::cout << "Calling function with index " << actionIndex << "\n";
 			int jmpVal = ao.runFunction();
 
-			if (actionIndex - jmpVal < 0) {
-				std::cout << "Tried to go back before start";
-				//throw std::runtime_error("Tried to go back before start");
-				actionIndex = 0;
+			//check for breakpoints
+			if (breakpointIndexes.size() > 0) {								// no point in checking if no breakpoints
+				if (actionIndex > breakpointIndexes.front()) {				//If the index used to be above the first breakpoint
+					if (actionIndex - jmpVal < breakpointIndexes.front()) { //And now the index is below the first breakpoint
+						actionIndex = breakpointIndexes.front();			//Instead set the index equal to the first breakpoint
+					}
+				}
 			}
-			else {
+			if (breakpointIndexes.size() > 0 &&								// no point in checking if no breakpoints
+				actionIndex > breakpointIndexes.front() &&					//If the index used to be above the first breakpoint
+				actionIndex - jmpVal < breakpointIndexes.front()) {			//And now the index is below the first breakpoint
+				actionIndex = breakpointIndexes.front();					//Instead set the index equal to the first breakpoint
+			}
+			else if (actionIndex-jmpVal < 0) {								//Otherwise, if trying to go back before 0, 
+				std::cout << "tried to go back before start";
+				//throw std::runtime_error("Tried to go back before start");
+				actionIndex = 0;											//don't.
+
+			}
+			else {																//Otherwise, increment/decrement actionindex
 				actionIndex = actionIndex - jmpVal;
 			}
 		}
