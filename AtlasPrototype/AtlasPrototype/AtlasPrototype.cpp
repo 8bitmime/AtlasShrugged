@@ -52,15 +52,9 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 			int jmpVal = ao.runFunction();
 
 			//check for breakpoints
-			if (breakpointIndexes.size() > 0) {								// no point in checking if no breakpoints
-				if (actionIndex > breakpointIndexes.front()) {				//If the index used to be above the first breakpoint
-					if (actionIndex - jmpVal < breakpointIndexes.front()) { //And now the index is below the first breakpoint
-						actionIndex = breakpointIndexes.front();			//Instead set the index equal to the first breakpoint
-					}
-				}
-			}
 			if (breakpointIndexes.size() > 0 &&								// no point in checking if no breakpoints
-				actionIndex > breakpointIndexes.front() &&					//If the index used to be above the first breakpoint
+				jmpVal > 0 &&												//If the index is jumping backwards
+				actionIndex > breakpointIndexes.front() &&					//and the index used to be above the first breakpoint
 				actionIndex - jmpVal < breakpointIndexes.front()) {			//And now the index is below the first breakpoint
 				actionIndex = breakpointIndexes.front();					//Instead set the index equal to the first breakpoint
 			}
