@@ -135,6 +135,7 @@ int main()
 	//std::cout << "startets\n";
 	atlasLoop(Standard, std::list<ActionObject>{myObject2, myObject4, myObject3, myObject5}, std::list<int>{});
 
+
 	
 }
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
