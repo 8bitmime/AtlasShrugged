@@ -33,6 +33,19 @@ bool runMe(bool (*function) ()) {
 	return (*function)();
 }
 
+bool atlasLoop(std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
+	return atlasLoop(Standard, listActions, breakpointIndexesIn);
+}
+
+bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions) {
+	std::list<int> breakpointIndexesIn;
+	breakpointIndexesIn = std::list<int>{};
+	return atlasLoop(style, listActions, breakpointIndexesIn);
+}
+
+bool atlasLoop(std::list<ActionObject> listActions) {
+	return atlasLoop(Standard, listActions);
+}
 
 
 
