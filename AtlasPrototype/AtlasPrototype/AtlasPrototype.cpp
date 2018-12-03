@@ -3,11 +3,16 @@
 
 #include "pch.h"
 #include "Header1.h"
+#include <iterator>
 
 //enum LoopStyle { Standard, Other };
 
 bool returnTrue() {
-	std::cout << "you called true!\n";
+	//std::cout << "you called true!\n";
+	return true;
+}
+
+bool returnTrue2() {
 	return true;
 }
 
@@ -25,7 +30,7 @@ bool failOnThirds() {
 	else {
 		value = true;
 	}
-	std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n";
+	//std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n";
 	return value;
 }
 
@@ -50,10 +55,11 @@ bool atlasLoop(std::list<ActionObject> listActions) {
 
 
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
+	//std::cout << "atlas looping\n";
 	std::list<int> breakpointIndexes = breakpointIndexesIn;
 	if (style == Standard) {
 		int actionIndex = 0;
-		while ((size_t)actionIndex < listActions.size()-1) { //cast because size is unsigned
+		while ((size_t)actionIndex < listActions.size()) { //cast because size is unsigned
 			while (breakpointIndexes.size() > 0 && actionIndex >= getEltAt(1, breakpointIndexes)) {
 				breakpointIndexes.pop_front();
 			}
@@ -61,7 +67,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 			ActionObject ao = getEltAt(actionIndex, listActions);
 
 			//call function until action is done, store return val
-			//std::cout << "Calling function with index " << actionIndex << "\n";
+			std::cout << "Calling function with index " << actionIndex << "\n";
 			int jmpVal = ao.runFunction();
 
 			//check for breakpoints
@@ -79,6 +85,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 			}
 			else {																//Otherwise, increment/decrement actionindex
 				actionIndex = actionIndex - jmpVal;
+				//std::cout << "index is now " << actionIndex << "\n";
 			}
 		}
 	}
@@ -116,6 +123,36 @@ int getEltAt(int a, std::list<int> listInt) {
 	return tempList.front();
 }
 
+
+//std::list<ActionObject> createAOList 
+
+void printArr(int *arr) {
+	//std::cout << arr[0];
+}
+
+std::list<ActionObject> deSugar(objOrList aoArr[], int sizeOfArray) {
+	std::list<ActionObject> listOfAO;
+	listOfAO = std::list<ActionObject>{};
+	//std::cout << sizeOfArray << "\n";
+	for (int i = 0; i < sizeOfArray; i++) {
+		std::cout << "size is: " << aoArr[i].list.getList().size() << "\n";
+		if (aoArr[i].list.getList().size() <1) {
+			std::cout << "sugaring object\n";
+			listOfAO.emplace_back(aoArr[i].ao.ptrActionFunction, aoArr[i].ao.resultList, aoArr[i].ao.minSuccess);
+			//std::cout << "Sugared for " << i << "th time\n";
+		}
+		else {
+			std::cout << "sugaring list:\n";
+			for (ActionObject aoi : aoArr[i].list.getList()) {
+				std::cout << "\t object in list\n";
+				listOfAO.emplace_back(aoi.ptrActionFunction, aoi.resultList, aoi.minSuccess);
+			}
+		}
+	}
+	//std::cout << listOfAO.size();
+	return listOfAO;
+}
+
 int main()
 {
 	std::cout << "Hello World!\n";
@@ -123,6 +160,8 @@ int main()
 	ActionObject myObject1;
 	bool(*pointerToReturnTrue)();
 	pointerToReturnTrue = &returnTrue;
+	bool(*pointerToReturnTrue2)();
+	pointerToReturnTrue2 = &returnTrue2;
 	PairInt pair1(2, 2);
 	PairInt pair2(4, 5);
 	std::list<PairInt> lpairs = { pair1, pair2 };
@@ -134,7 +173,6 @@ int main()
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	myObject2.runFunction();
-	
 	bool(*pointerToFailThirds)();
 	pointerToFailThirds = &failOnThirds;
 	PairInt pair11(1, 1);
@@ -146,11 +184,33 @@ int main()
 	ActionObject myObject4 = myObject2;
 	ActionObject myObject5 = myObject2;
 	//std::cout << "startets\n";
-	atlasLoop(Standard, std::list<ActionObject>{myObject2, myObject4, myObject3, myObject5}, std::list<int>{});
+	//atlasLoop(Standard, std::list<ActionObject>{myObject2, myObject4, myObject3, myObject5}, std::list<int>{});
 
-
+	objOrList arrToDesugar[] = { objOrList(pointerToReturnTrue), objOrList(pointerToFailThirds), objOrList(pointerToReturnTrue2) };
+	ActionObject tempList[] = { ActionObject(pointerToFailThirds), ActionObject(pointerToReturnTrue2) };
+	loActionObject temploAO = loActionObject(tempList, 2);
+	objOrList arrToDesugar2[] = { objOrList(pointerToReturnTrue), objOrList(temploAO)};
+	std::list<ActionObject> results = deSugar(arrToDesugar, 3);
+	//std::cout << results.size() << "\n";
+	atlasLoop(results);
 	
+
+	objOrList arrToDesugar3[] = { objOrList(pointerToReturnTrue), objOrList(pointerToFailThirds, pointerToReturnTrue2) };
+	atlasLoop(deSugar(arrToDesugar3, 2));
+
+
 }
+
+
+// loopme({myaction, myAction2}, {myaction3}, {myaction5, myac5tion7}}
+/*
+ListOfActions templist1 = {myaction, myaction2}
+ListOfActions templist2 = {myaction3};
+ListOfActions templist3 = {myaction5, myaction7}
+listOfactions templist4 = {templist1, templist2, templist3}
+loopme(templist4);
+
+*/
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 

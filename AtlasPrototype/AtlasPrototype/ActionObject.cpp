@@ -48,6 +48,14 @@ class ActionObject
 		numSuccess = 0;
 	}
 
+	ActionObject(bool(*givenPointer)()) {
+		ptrActionFunction = givenPointer;
+		resultList = std::list<PairInt>{ PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1) };
+		minSuccess = 1;
+		numFailures = 0;
+		numSuccess = 0;
+	}
+
 
 	void printEachPair() {
 		for (PairInt p : resultList) {
@@ -68,6 +76,7 @@ class ActionObject
 	}
 	
 	int runFunction() {
+		//std::cout << "running function\n";
 		int tempNumSuccess = 0;
 		int tempNumFailures = 0;
 		//std::cout << "succ: " << tempNumSuccess << ", fail: " << tempNumFailures;
@@ -103,3 +112,76 @@ class ActionObject
 		return returnInt;
 	}
 };
+
+class loActionObject {
+
+	public:
+		std::list<ActionObject> aObjectList;
+		
+	loActionObject(std::list<ActionObject> list) {
+		aObjectList = list;
+	}
+
+	loActionObject() {
+		aObjectList = std::list<ActionObject>{};
+	}
+	
+	loActionObject(ActionObject aoArr[], int size) {
+		aObjectList = std::list<ActionObject>{};
+		for (int i = 0; i < size; i++) {
+			aObjectList.emplace_back(aoArr[i].ptrActionFunction, aoArr[i].resultList, aoArr[i].minSuccess);
+		}
+	}
+
+	std::list<ActionObject> getList() {
+		return aObjectList;
+	}
+
+};
+
+class objOrList {
+	public:
+		loActionObject list;
+		ActionObject ao;
+
+		objOrList(loActionObject inList) {
+			list = inList;
+			ao = NULL;
+		}
+
+		objOrList(ActionObject inao) {
+			list = loActionObject();
+			ao = inao;
+		}
+
+		objOrList(int size, ActionObject arr[]) {
+			list = loActionObject();
+			ao = NULL;
+			for (int i = 0; i < size; i++) {
+				list.aObjectList.emplace_back(arr[i].ptrActionFunction, arr[i].resultList, arr[i].minSuccess);
+			}
+		}
+
+		objOrList(ActionObject ao1, ActionObject ao2) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2});
+			ao = NULL;
+		}
+
+
+		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3});
+			ao = NULL;
+		}
+
+		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4});
+			ao = NULL;
+		}
+
+		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5});
+			ao = NULL;
+		}
+
+};
+
