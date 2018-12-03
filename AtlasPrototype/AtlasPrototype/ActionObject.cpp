@@ -149,6 +149,7 @@ class objOrList {
 			ao = NULL;
 		}
 
+
 		objOrList(ActionObject inao) {
 			list = loActionObject();
 			ao = inao;
@@ -184,4 +185,6 @@ class objOrList {
 		}
 
 };
+
+
 

@@ -16,6 +16,34 @@ bool returnTrue2() {
 	return true;
 }
 
+bool returnTrue3() {
+	return true;
+}
+
+bool returnTrue4() {
+	return true;
+}
+
+bool returnTrue5() {
+	return true;
+}
+
+bool returnTrue6() {
+	return true;
+}
+
+bool returnTrue7() {
+	return true;
+}
+
+bool returnTrue8() {
+	return true;
+}
+
+bool returnTrue9() {
+	return true;
+}
+
 bool returnFalse() {
 	return false;
 }
@@ -60,7 +88,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 	if (style == Standard) {
 		int actionIndex = 0;
 		while ((size_t)actionIndex < listActions.size()) { //cast because size is unsigned
-			while (breakpointIndexes.size() > 0 && actionIndex >= getEltAt(1, breakpointIndexes)) {
+			while (breakpointIndexes.size() > 1 && actionIndex >= getEltAt(1, breakpointIndexes)) {
 				breakpointIndexes.pop_front();
 			}
 			//get actionobject
@@ -93,6 +121,12 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 		//do stuff
 	}
 	return true;
+}
+
+bool atlasLoop(objOrList aoArr[], int sizeOfArray) {
+	std::list<ActionObject> desugaredActions = deSugar(aoArr, sizeOfArray);
+	std::list<int> desugaredBreakpoints = deSugarBreakpoints(aoArr, sizeOfArray, desugaredActions);
+	return atlasLoop(desugaredActions, desugaredBreakpoints);
 }
 
 ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
@@ -128,6 +162,22 @@ int getEltAt(int a, std::list<int> listInt) {
 
 void printArr(int *arr) {
 	//std::cout << arr[0];
+}
+
+std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray, std::list<ActionObject> actions) {
+	std::list<int> retBreakpoints = std::list<int>{};
+	for (int i = 0; i < sizeOfArray; i++) { //Problem is that when you increase I a lot, you skip values
+		retBreakpoints.push_back(i);
+		if (aoArr[i].list.aObjectList.size() < 1) {
+			//is object
+		}
+		else {
+			//is list
+			int sizeOfList = aoArr[i].list.aObjectList.size();
+			i = (i + sizeOfList - 1);
+		}
+	}
+	return retBreakpoints;
 }
 
 std::list<ActionObject> deSugar(objOrList aoArr[], int sizeOfArray) {
@@ -194,15 +244,37 @@ int main()
 	//std::cout << results.size() << "\n";
 	atlasLoop(results);
 	
+	bool(*pointerToReturnTrue3)();
+	pointerToReturnTrue3 = &returnTrue3;
+	bool(*pointerToReturnTrue4)();
+	pointerToReturnTrue4 = &returnTrue4;
+	bool(*pointerToReturnTrue5)();
+	pointerToReturnTrue5 = &returnTrue5;
+	bool(*pointerToReturnTrue6)();
+	pointerToReturnTrue6 = &returnTrue6;
+	bool(*pointerToReturnTrue7)();
+	pointerToReturnTrue7 = &returnTrue7;
+	bool(*pointerToReturnTrue8)();
+	pointerToReturnTrue8 = &returnTrue8;
+	bool(*pointerToReturnTrue9)();
+	pointerToReturnTrue9 = &returnTrue9;
 
-	objOrList arrToDesugar3[] = { objOrList(pointerToReturnTrue), objOrList(pointerToFailThirds, pointerToReturnTrue2) };
-	atlasLoop(deSugar(arrToDesugar3, 2));
+
+
+	objOrList arrToDesugar3[] = { 
+		objOrList(pointerToReturnTrue), 
+		objOrList(pointerToFailThirds, pointerToReturnTrue2), 
+		objOrList(pointerToReturnTrue3, pointerToReturnTrue4, pointerToReturnTrue5), 
+		objOrList(pointerToReturnTrue6, pointerToReturnTrue7), 
+		objOrList(pointerToReturnTrue8), 
+		objOrList(pointerToReturnTrue9) };
+	atlasLoop(arrToDesugar3, 6);
 
 
 }
 
 
-// loopme({myaction, myAction2}, {myaction3}, {myaction5, myac5tion7}}
+// loopme({myaction, myAction2}, {myaction3}, {myaction5, {myaction6, myaction7}}}
 /*
 ListOfActions templist1 = {myaction, myaction2}
 ListOfActions templist2 = {myaction3};
