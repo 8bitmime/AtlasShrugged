@@ -11,4 +11,4 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 ActionObject getEltAt(int a, std::list<ActionObject> listAO);
 int getEltAt(int a, std::list<int> listInt);
 std::list<ActionObject> deSugar(objOrList aoArr[], int sizeOfArray);
-std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray, std::list<ActionObject> actions);
+std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray);

@@ -5,7 +5,7 @@
 #include "Header1.h"
 #include <iterator>
 
-//enum LoopStyle { Standard, Other };
+#define VERBOSE_FLAG true
 
 bool returnTrue() {
 	//std::cout << "you called true!\n";
@@ -83,7 +83,7 @@ bool atlasLoop(std::list<ActionObject> listActions) {
 
 
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
-	//std::cout << "atlas looping\n";
+	if (VERBOSE_FLAG) { std::cout << "atlas looping\n"; }
 	std::list<int> breakpointIndexes = breakpointIndexesIn;
 	if (style == Standard) {
 		int actionIndex = 0;
@@ -95,7 +95,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 			ActionObject ao = getEltAt(actionIndex, listActions);
 
 			//call function until action is done, store return val
-			std::cout << "Calling function with index " << actionIndex << "\n";
+			if (VERBOSE_FLAG) { std::cout << "Calling function with index " << actionIndex << "\n"; }
 			int jmpVal = ao.runFunction();
 
 			//check for breakpoints
@@ -123,12 +123,14 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 	return true;
 }
 
+//For sugared inputs
 bool atlasLoop(objOrList aoArr[], int sizeOfArray) {
 	std::list<ActionObject> desugaredActions = deSugar(aoArr, sizeOfArray);
-	std::list<int> desugaredBreakpoints = deSugarBreakpoints(aoArr, sizeOfArray, desugaredActions);
+	std::list<int> desugaredBreakpoints = deSugarBreakpoints(aoArr, sizeOfArray);
 	return atlasLoop(desugaredActions, desugaredBreakpoints);
 }
 
+//Because we should have used an array
 ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 	std::list<ActionObject> tempList = listAO;
 	if ((size_t)a >= listAO.size()) {
@@ -143,6 +145,7 @@ ActionObject getEltAt(int a, std::list<ActionObject> listAO) {
 	return tempList.front();
 }
 
+//Because we should have used an array
 int getEltAt(int a, std::list<int> listInt) {
 	std::list<int> tempList = listInt;
 	if ((size_t)a >= listInt.size()) {
@@ -157,44 +160,42 @@ int getEltAt(int a, std::list<int> listInt) {
 	return tempList.front();
 }
 
-
-//std::list<ActionObject> createAOList 
-
-void printArr(int *arr) {
-	//std::cout << arr[0];
-}
-
-std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray, std::list<ActionObject> actions) {
+//Takes in an array of arrays  or actionobjects, and determines the indexes of the breakpoints in the 1d list
+std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray) {
 	std::list<int> retBreakpoints = std::list<int>{};
-	for (int i = 0; i < sizeOfArray; i++) { //Problem is that when you increase I a lot, you skip values
-		retBreakpoints.push_back(i);
+	int prevBreak = 0;
+	retBreakpoints.push_back(0);
+	//This loops says "for each arr/object in the array aoArr, add it's length to the previous breakpoint to find the new breakpoint
+	for (int i = 0; i < sizeOfArray; i++) {
+		int lengthOfThisBit = 0;
 		if (aoArr[i].list.aObjectList.size() < 1) {
-			//is object
+			lengthOfThisBit = 1;
 		}
 		else {
-			//is list
-			int sizeOfList = aoArr[i].list.aObjectList.size();
-			i = (i + sizeOfList - 1);
+			lengthOfThisBit = aoArr[i].list.aObjectList.size();
 		}
+		prevBreak = prevBreak + lengthOfThisBit;
+		retBreakpoints.push_back(prevBreak);
 	}
 	return retBreakpoints;
+
 }
 
+//Takes an array of arrays or actionobjects, and compresses them into a 1d list
 std::list<ActionObject> deSugar(objOrList aoArr[], int sizeOfArray) {
 	std::list<ActionObject> listOfAO;
 	listOfAO = std::list<ActionObject>{};
-	//std::cout << sizeOfArray << "\n";
-	for (int i = 0; i < sizeOfArray; i++) {
-		std::cout << "size is: " << aoArr[i].list.getList().size() << "\n";
+	if (VERBOSE_FLAG) { std::cout << sizeOfArray << "\n"; }
+	for (int i = 0; i < sizeOfArray; i++) { //For each array or object in aoArr:
+		if (VERBOSE_FLAG) { std::cout << "size is: " << aoArr[i].list.getList().size() << "\n"; }
 		if (aoArr[i].list.getList().size() <1) {
-			std::cout << "sugaring object\n";
 			listOfAO.emplace_back(aoArr[i].ao.ptrActionFunction, aoArr[i].ao.resultList, aoArr[i].ao.minSuccess);
-			//std::cout << "Sugared for " << i << "th time\n";
+			if (VERBOSE_FLAG) { std::cout << "Sugaring OBJECT for " << i << "th time\n"; }
 		}
 		else {
-			std::cout << "sugaring list:\n";
+			if (VERBOSE_FLAG) { std::cout << "Sugaring LIST for the " << i << "th time:\n"; }
 			for (ActionObject aoi : aoArr[i].list.getList()) {
-				std::cout << "\t object in list\n";
+				if (VERBOSE_FLAG) { std::cout << "\t object in list\n"; }
 				listOfAO.emplace_back(aoi.ptrActionFunction, aoi.resultList, aoi.minSuccess);
 			}
 		}
@@ -216,7 +217,7 @@ int main()
 	PairInt pair2(4, 5);
 	std::list<PairInt> lpairs = { pair1, pair2 };
 	ActionObject myObject2(pointerToReturnTrue, lpairs, 1);
-	myObject2.printValues();
+	//myObject2.printValues();
 	//atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
 	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
 
