@@ -5,7 +5,8 @@
 #include "Header1.h"
 #include <iterator>
 
-#define VERBOSE_FLAG true
+#define VERBOSE_FLAG false
+#define MAX_COUNT 50000
 
 bool returnTrue() {
 	//std::cout << "you called true!\n";
@@ -46,6 +47,52 @@ bool returnTrue9() {
 
 bool returnFalse() {
 	return false;
+}
+
+bool countReturnTrue1() {
+	for (int k = 0; k < MAX_COUNT; k++) {
+		int arrResults[MAX_COUNT + 10];
+		for (int i = 0; i < MAX_COUNT; i++) {
+			arrResults[i] = i;
+		}
+	}
+	return true;
+}
+
+bool countReturnTrue2() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue3() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue4() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue5() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue6() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue7() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue8() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue9() {
+	return countReturnTrue1();
+}
+
+bool countReturnTrue10() {
+	return countReturnTrue1();
 }
 
 int globFOT = 0;
@@ -271,7 +318,58 @@ int main()
 		objOrList(pointerToReturnTrue9) };
 	atlasLoop(arrToDesugar3, 6);
 
+	bool(*pointerToCountReturnTrue1)();
+	pointerToCountReturnTrue1 = &countReturnTrue1;
+	bool(*pointerToCountReturnTrue2)();
+	pointerToCountReturnTrue2 = &countReturnTrue2;
+	bool(*pointerToCountReturnTrue3)();
+	pointerToCountReturnTrue3 = &countReturnTrue3;
+	bool(*pointerToCountReturnTrue4)();
+	pointerToCountReturnTrue4 = &countReturnTrue4;
+	bool(*pointerToCountReturnTrue5)();
+	pointerToCountReturnTrue5 = &countReturnTrue5;
+	bool(*pointerToCountReturnTrue6)();
+	pointerToCountReturnTrue6 = &countReturnTrue6;
+	bool(*pointerToCountReturnTrue7)();
+	pointerToCountReturnTrue7 = &countReturnTrue7;
+	bool(*pointerToCountReturnTrue8)();
+	pointerToCountReturnTrue8 = &countReturnTrue8;
+	bool(*pointerToCountReturnTrue9)();
+	pointerToCountReturnTrue9 = &countReturnTrue9;
+	bool(*pointerToCountReturnTrue10)();
+	pointerToCountReturnTrue10 = &countReturnTrue10;
 
+	ActionObject objCntReturn1(countReturnTrue1);
+	ActionObject objCntReturn2(countReturnTrue2);
+	ActionObject objCntReturn3(countReturnTrue3);
+	ActionObject objCntReturn4(countReturnTrue4);
+	ActionObject objCntReturn5(countReturnTrue5);
+	ActionObject objCntReturn6(countReturnTrue6);
+	ActionObject objCntReturn7(countReturnTrue7);
+	ActionObject objCntReturn8(countReturnTrue8);
+	ActionObject objCntReturn9(countReturnTrue9);
+	ActionObject objCntReturn10(countReturnTrue10);
+
+	float durations[10];
+	for (int i = 0; i < 10; i++) {
+		const clock_t begin_time = clock();
+		//atlasLoop(std::list<ActionObject>{objCntReturn1, objCntReturn2, objCntReturn3, objCntReturn4, objCntReturn5, objCntReturn6, objCntReturn7, objCntReturn8, objCntReturn9, objCntReturn10});
+		for (int k = 0; k < 10; k++) {
+			countReturnTrue1();
+		}
+		const clock_t end_time = clock();
+		float duration = float(end_time - begin_time) / CLOCKS_PER_SEC;
+		durations[i] = duration;
+	}
+	std::cout << "done";
+	for (int i = 0; i < 10; i++) {
+		std::cout << durations[i] << ", ";
+	}
+	float total = 0;
+	for (int i = 0; i < 10; i++) {
+		total += durations[i];
+	}
+	std::cout << "\n Avg: " << (total / 10);
 }
 
 

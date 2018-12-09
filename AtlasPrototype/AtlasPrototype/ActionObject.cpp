@@ -50,7 +50,7 @@ class ActionObject
 
 	ActionObject(bool(*givenPointer)()) {
 		ptrActionFunction = givenPointer;
-		resultList = std::list<PairInt>{ PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1), PairInt(1, 1) };
+		resultList = std::list<PairInt>{ PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5) };
 		minSuccess = 1;
 		numFailures = 0;
 		numSuccess = 0;
