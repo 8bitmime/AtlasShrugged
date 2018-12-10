@@ -5,7 +5,7 @@
 #include "Header1.h"
 #include <iterator>
 
-#define VERBOSE_FLAG false
+#define VERBOSE_FLAG true
 #define MAX_COUNT 50000
 
 bool returnTrue() {
@@ -268,6 +268,47 @@ int main()
 	//atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
 	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
 
+	/*
+	//Declare the pointers to functions
+	bool(*pointerToFunctionA)(); pointerToFunctionA = &FunctionA;
+	bool(*pointerToFunctionB)(); pointerToFunctionB = &FunctionB;
+
+	//Create pairs of failure-nums and jump-backs
+	PairInt pair1(2, 2);
+	PairInt pair2(4, 5);
+
+	//Create the list of pairs
+	std::list<PairInt> lpairs1 = { pair1, pair2 };
+	std::list<PairInt> lpairs2 = {};
+
+	//Create ActionObjects with a pointer to a function, a list of pairs, and a minimum number of successes
+	ActionObject myObjectA(pointerToFunctionA, lpairs1, 3);
+	ActionObject myObjectB(pointerToFunctionB, lpairs2, 2);
+
+	//Create the list of ActionObjects
+	std::list<ActionObject> lActionObjects = { myObjectA, myObjectB };
+
+	//Call atlas loop with style Standard, the list of action objects, and an empty list of breakpoints
+	atlasLoop(Standard, lActionObjects, std::list<int>{});
+	 */
+	/*
+	 //Declare the pointers to functions
+	bool(*pointerToFunctionA)(); pointerToFunctionA = &FunctionA;
+	...
+
+	//Create the list of objOrList s
+	objOrList arrayOfObjOrList[] = {
+		objOrList(pointerToFunctionA),
+		objOrList(pointerToFunctionB, pointerToFunctionC),
+		objOrList(pointerToFunctionD, pointerToFunctionE, pointerToFunctionF),
+		objOrList(pointerToFunctionG, pointerToFunctionH),
+		objOrList(pointerToFunctionI),
+		objOrList(pointerToFunctionJ) };
+
+	//Call looping function with size of list
+	atlasLoop(arrayOfObjOrList, 6);
+	*/
+
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	myObject2.runFunction();
@@ -350,6 +391,7 @@ int main()
 	ActionObject objCntReturn9(countReturnTrue9);
 	ActionObject objCntReturn10(countReturnTrue10);
 
+	/*
 	float durations[10];
 	for (int i = 0; i < 10; i++) {
 		const clock_t begin_time = clock();
@@ -370,6 +412,7 @@ int main()
 		total += durations[i];
 	}
 	std::cout << "\n Avg: " << (total / 10);
+	*/
 }
 
 
