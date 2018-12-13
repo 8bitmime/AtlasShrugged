@@ -12,3 +12,4 @@ ActionObject getEltAt(int a, std::list<ActionObject> listAO);
 int getEltAt(int a, std::list<int> listInt);
 std::list<ActionObject> deSugar(ool aoArr[], int sizeOfArray);
 std::list<int> deSugarBreakpoints(ool aoArr[], int sizeOfArray);
+bool returnTrue();

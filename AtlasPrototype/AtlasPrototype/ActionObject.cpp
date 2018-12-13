@@ -6,7 +6,7 @@ class PairInt
 		int failNum;
 		int resultJump;
 	PairInt() {
-		//default constructor
+		
 	}
 	PairInt(int fail, int result) {
 		failNum = fail;
@@ -31,7 +31,7 @@ class ActionObject
 		int numSuccess;
 
 	ActionObject() {
-		//Default constructor
+		//Default constructor, never used
 		ptrActionFunction = (NULL);
 		resultList = std::list<PairInt>{};
 		minSuccess = 1;
@@ -39,7 +39,7 @@ class ActionObject
 		numSuccess = 0;
 
 	}
-
+	//Normal high-detail constructor
 	ActionObject(bool(*givenPointer)(), std::list<PairInt> list, int ms) {
 		ptrActionFunction = givenPointer;
 		resultList = list;
@@ -47,22 +47,26 @@ class ActionObject
 		numFailures = 0;
 		numSuccess = 0;
 	}
-
+	//Normal low-detail constructor
 	ActionObject(bool(*givenPointer)()) {
 		ptrActionFunction = givenPointer;
-		resultList = std::list<PairInt>{ PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5), PairInt(1, 5) };
+		resultList = std::list<PairInt>{};
+		for(int i = 0; i < 15; i++) {
+			resultList.emplace_back(1, 20);
+		}
 		minSuccess = 1;
 		numFailures = 0;
 		numSuccess = 0;
 	}
 
-
+	//For debugging
 	void printEachPair() {
 		for (PairInt p : resultList) {
 			p.printLessVerbose();
 		}
 	}
 
+	//For debugging
 	void printValues() {
 		std::cout << "I have pointer " << ptrActionFunction << ", \n";
 		printEachPair();
@@ -70,6 +74,7 @@ class ActionObject
 
 	}
 
+	//For debugging
 	void printSansPairs() {
 		std::cout << "I have pointer " << ptrActionFunction << ", minSuccess " << minSuccess << ", numFailures " << numFailures << ", and numSuccess " << numSuccess;
 
@@ -163,11 +168,12 @@ class ool {
 			}
 		}
 
+
+		//Cannot pass in an ool into a ool constructor, workaround to work for up to 20 values in list
 		ool(ActionObject ao1, ActionObject ao2) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2});
 			ao = NULL;
 		}
-
 
 		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3});
@@ -181,6 +187,77 @@ class ool {
 
 		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5});
+			ao = NULL;
+		}
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6});
+			ao = NULL;
+		}
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7});
+			ao = NULL;
+		}
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8});
+			ao = NULL;
+		}
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15, ActionObject ao16) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15, ao16});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15, ActionObject ao16, ActionObject ao17) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15, ao16, ao17});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15, ActionObject ao16, ActionObject ao17, ActionObject ao18) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15, ao16, ao17, ao18});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15, ActionObject ao16, ActionObject ao17, ActionObject ao18, ActionObject ao19) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15, ao16, ao17, ao18, ao19});
+			ao = NULL;
+		}
+
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5, ActionObject ao6, ActionObject ao7, ActionObject ao8, ActionObject ao9, ActionObject ao10, ActionObject ao11, ActionObject ao12, ActionObject ao13, ActionObject ao14, ActionObject ao15, ActionObject ao16, ActionObject ao17, ActionObject ao18, ActionObject ao19, ActionObject ao20) {
+			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5, ao6, ao7, ao8, ao9, ao10, ao11, ao12, ao13, ao14, ao15, ao16, ao17, ao18, ao19, ao20});
 			ao = NULL;
 		}
 

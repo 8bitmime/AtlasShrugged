@@ -1,117 +1,11 @@
-﻿// AtlasPrototype.cpp : This file contains the 'main' function. Program execution begins and ends there.
-// new comment
+﻿// AtlasPrototype.cpp : This file contains the 'main' function.
+//
 
 #include "pch.h"
-#include "Header1.h"
+#include "AtlasPrototype.h"
 #include <iterator>
 
 #define VERBOSE_FLAG false
-#define MAX_COUNT 50000
-
-bool returnTrue() {
-	//std::cout << "you called true!\n";
-	return true;
-}
-
-bool returnTrue2() {
-	return true;
-}
-
-bool returnTrue3() {
-	return true;
-}
-
-bool returnTrue4() {
-	return true;
-}
-
-bool returnTrue5() {
-	return true;
-}
-
-bool returnTrue6() {
-	return true;
-}
-
-bool returnTrue7() {
-	return true;
-}
-
-bool returnTrue8() {
-	return true;
-}
-
-bool returnTrue9() {
-	return true;
-}
-
-bool returnFalse() {
-	return false;
-}
-
-bool countReturnTrue1() {
-	for (int k = 0; k < MAX_COUNT; k++) {
-		int arrResults[MAX_COUNT + 10];
-		for (int i = 0; i < MAX_COUNT; i++) {
-			arrResults[i] = i;
-		}
-	}
-	return true;
-}
-
-bool countReturnTrue2() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue3() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue4() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue5() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue6() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue7() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue8() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue9() {
-	return countReturnTrue1();
-}
-
-bool countReturnTrue10() {
-	return countReturnTrue1();
-}
-
-int globFOT = 0;
-bool failOnThirds() {
-	globFOT++;
-	bool value = false;
-	if (globFOT % 3 == 0 && globFOT < 16) {
-		value = false;
-	}
-	else {
-		value = true;
-	}
-	if (VERBOSE_FLAG) { std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n"; }
-	return value;
-}
-
-bool runMe(bool (*function) ()) {
-	return (*function)();
-}
 
 bool atlasLoop(std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
 	return atlasLoop(Standard, listActions, breakpointIndexesIn);
@@ -127,9 +21,8 @@ bool atlasLoop(std::list<ActionObject> listActions) {
 	return atlasLoop(Standard, listActions);
 }
 
-
-
 bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
+	bool sucessfullLoop = true;
 	if (VERBOSE_FLAG) { std::cout << "atlas looping\n"; }
 	std::list<int> breakpointIndexes = breakpointIndexesIn;
 	if (style == Standard) {
@@ -167,7 +60,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 	else if (style == Other) {
 		//do stuff
 	}
-	return true;
+	return sucessfullLoop;
 }
 
 //For sugared inputs
@@ -253,8 +146,8 @@ std::list<ActionObject> deSugar(ool aoArr[], int sizeOfArray) {
 
 int main()
 {
-	std::cout << "Hello World!\n";
-	doNothing();
+
+	/*
 	ActionObject myObject1;
 	bool(*pointerToReturnTrue)();
 	pointerToReturnTrue = &returnTrue;
@@ -268,46 +161,6 @@ int main()
 	//atlasLoop(Standard, std::list<ActionObject>{myObject2}, std::list<int>{});
 	std::list<int> listInts = { 101, 102, 103, 104, 105, 106 };
 
-	/*
-	//Declare the pointers to functions
-	bool(*pointerToFunctionA)(); pointerToFunctionA = &FunctionA;
-	bool(*pointerToFunctionB)(); pointerToFunctionB = &FunctionB;
-
-	//Create pairs of failure-nums and jump-backs
-	PairInt pair1(2, 2);
-	PairInt pair2(4, 5);
-
-	//Create the list of pairs
-	std::list<PairInt> lpairs1 = { pair1, pair2 };
-	std::list<PairInt> lpairs2 = {};
-
-	//Create ActionObjects with a pointer to a function, a list of pairs, and a minimum number of successes
-	ActionObject myObjectA(pointerToFunctionA, lpairs1, 3);
-	ActionObject myObjectB(pointerToFunctionB, lpairs2, 2);
-
-	//Create the list of ActionObjects
-	std::list<ActionObject> lActionObjects = { myObjectA, myObjectB };
-
-	//Call atlas loop with style Standard, the list of action objects, and an empty list of breakpoints
-	atlasLoop(Standard, lActionObjects, std::list<int>{});
-	 */
-	/*
-	 //Declare the pointers to functions
-	bool(*pointerToFunctionA)(); pointerToFunctionA = &FunctionA;
-	...
-
-	//Create the list of ool s
-	ool arrayOfObjOrList[] = {
-		ool(pointerToFunctionA),
-		ool(pointerToFunctionB, pointerToFunctionC),
-		ool(pointerToFunctionD, pointerToFunctionE, pointerToFunctionF),
-		ool(pointerToFunctionG, pointerToFunctionH),
-		ool(pointerToFunctionI),
-		ool(pointerToFunctionJ) };
-
-	//Call looping function with size of list
-	atlasLoop(arrayOfObjOrList, 6);
-	*/
 
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
 	//std::cout << listInts.size() << " " << getEltAt(4, listInts);
@@ -333,20 +186,13 @@ int main()
 	//std::cout << results.size() << "\n";
 	atlasLoop(results);
 	
-	bool(*pointerToReturnTrue3)();
-	pointerToReturnTrue3 = &returnTrue3;
-	bool(*pointerToReturnTrue4)();
-	pointerToReturnTrue4 = &returnTrue4;
-	bool(*pointerToReturnTrue5)();
-	pointerToReturnTrue5 = &returnTrue5;
-	bool(*pointerToReturnTrue6)();
-	pointerToReturnTrue6 = &returnTrue6;
-	bool(*pointerToReturnTrue7)();
-	pointerToReturnTrue7 = &returnTrue7;
-	bool(*pointerToReturnTrue8)();
-	pointerToReturnTrue8 = &returnTrue8;
-	bool(*pointerToReturnTrue9)();
-	pointerToReturnTrue9 = &returnTrue9;
+	bool(*pointerToReturnTrue3)();pointerToReturnTrue3 = &returnTrue3;
+	bool(*pointerToReturnTrue4)();pointerToReturnTrue4 = &returnTrue4;
+	bool(*pointerToReturnTrue5)();pointerToReturnTrue5 = &returnTrue5;
+	bool(*pointerToReturnTrue6)();pointerToReturnTrue6 = &returnTrue6;
+	bool(*pointerToReturnTrue7)();pointerToReturnTrue7 = &returnTrue7;
+	bool(*pointerToReturnTrue8)();pointerToReturnTrue8 = &returnTrue8;
+	bool(*pointerToReturnTrue9)();pointerToReturnTrue9 = &returnTrue9;
 
 
 
@@ -381,37 +227,6 @@ int main()
 	ActionObject objCntReturn9(countReturnTrue9);
 	ActionObject objCntReturn10(countReturnTrue10);
 
-	/*
-	float durations[10];
-	for (int i = 0; i < 10; i++) {
-		const clock_t begin_time = clock();
-		//atlasLoop(std::list<ActionObject>{objCntReturn1, objCntReturn2, objCntReturn3, objCntReturn4, objCntReturn5, objCntReturn6, objCntReturn7, objCntReturn8, objCntReturn9, objCntReturn10});
-		for (int k = 0; k < 10; k++) {
-			countReturnTrue1();
-		}
-		const clock_t end_time = clock();
-		float duration = float(end_time - begin_time) / CLOCKS_PER_SEC;
-		durations[i] = duration;
-	}
-	std::cout << "done";
-	for (int i = 0; i < 10; i++) {
-		std::cout << durations[i] << ", ";
-	}
-	float total = 0;
-	for (int i = 0; i < 10; i++) {
-		total += durations[i];
-	}
-	std::cout << "\n Avg: " << (total / 10);
 	*/
+
 }
-
-
-// loopme({myaction, myAction2}, {myaction3}, {myaction5, {myaction6, myaction7}}}
-/*
-ListOfActions templist1 = {myaction, myaction2}
-ListOfActions templist2 = {myaction3};
-ListOfActions templist3 = {myaction5, myaction7}
-listOfactions templist4 = {templist1, templist2, templist3}
-loopme(templist4);
-
-*/
