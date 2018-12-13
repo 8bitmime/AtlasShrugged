@@ -139,23 +139,23 @@ class loActionObject {
 
 };
 
-class objOrList {
+class ool {
 	public:
 		loActionObject list;
 		ActionObject ao;
 
-		objOrList(loActionObject inList) {
+		ool(loActionObject inList) {
 			list = inList;
 			ao = NULL;
 		}
 
 
-		objOrList(ActionObject inao) {
+		ool(ActionObject inao) {
 			list = loActionObject();
 			ao = inao;
 		}
 
-		objOrList(int size, ActionObject arr[]) {
+		ool(int size, ActionObject arr[]) {
 			list = loActionObject();
 			ao = NULL;
 			for (int i = 0; i < size; i++) {
@@ -163,23 +163,23 @@ class objOrList {
 			}
 		}
 
-		objOrList(ActionObject ao1, ActionObject ao2) {
+		ool(ActionObject ao1, ActionObject ao2) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2});
 			ao = NULL;
 		}
 
 
-		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3) {
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3});
 			ao = NULL;
 		}
 
-		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4) {
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4});
 			ao = NULL;
 		}
 
-		objOrList(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5) {
+		ool(ActionObject ao1, ActionObject ao2, ActionObject ao3, ActionObject ao4, ActionObject ao5) {
 			list = loActionObject(std::list<ActionObject>{ao1, ao2, ao3, ao4, ao5});
 			ao = NULL;
 		}

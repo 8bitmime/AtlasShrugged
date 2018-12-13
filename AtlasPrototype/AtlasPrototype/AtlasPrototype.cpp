@@ -5,7 +5,7 @@
 #include "Header1.h"
 #include <iterator>
 
-#define VERBOSE_FLAG true
+#define VERBOSE_FLAG false
 #define MAX_COUNT 50000
 
 bool returnTrue() {
@@ -105,7 +105,7 @@ bool failOnThirds() {
 	else {
 		value = true;
 	}
-	//std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n";
+	if (VERBOSE_FLAG) { std::cout << "Called fot for the " << globFOT << " time, returning " << value << "\n"; }
 	return value;
 }
 
@@ -171,7 +171,7 @@ bool atlasLoop(LoopStyle style, std::list<ActionObject> listActions, std::list<i
 }
 
 //For sugared inputs
-bool atlasLoop(objOrList aoArr[], int sizeOfArray) {
+bool atlasLoop(ool aoArr[], int sizeOfArray) {
 	std::list<ActionObject> desugaredActions = deSugar(aoArr, sizeOfArray);
 	std::list<int> desugaredBreakpoints = deSugarBreakpoints(aoArr, sizeOfArray);
 	return atlasLoop(desugaredActions, desugaredBreakpoints);
@@ -208,7 +208,7 @@ int getEltAt(int a, std::list<int> listInt) {
 }
 
 //Takes in an array of arrays  or actionobjects, and determines the indexes of the breakpoints in the 1d list
-std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray) {
+std::list<int> deSugarBreakpoints(ool aoArr[], int sizeOfArray) {
 	std::list<int> retBreakpoints = std::list<int>{};
 	int prevBreak = 0;
 	retBreakpoints.push_back(0);
@@ -229,7 +229,7 @@ std::list<int> deSugarBreakpoints(objOrList aoArr[], int sizeOfArray) {
 }
 
 //Takes an array of arrays or actionobjects, and compresses them into a 1d list
-std::list<ActionObject> deSugar(objOrList aoArr[], int sizeOfArray) {
+std::list<ActionObject> deSugar(ool aoArr[], int sizeOfArray) {
 	std::list<ActionObject> listOfAO;
 	listOfAO = std::list<ActionObject>{};
 	if (VERBOSE_FLAG) { std::cout << sizeOfArray << "\n"; }
@@ -296,14 +296,14 @@ int main()
 	bool(*pointerToFunctionA)(); pointerToFunctionA = &FunctionA;
 	...
 
-	//Create the list of objOrList s
-	objOrList arrayOfObjOrList[] = {
-		objOrList(pointerToFunctionA),
-		objOrList(pointerToFunctionB, pointerToFunctionC),
-		objOrList(pointerToFunctionD, pointerToFunctionE, pointerToFunctionF),
-		objOrList(pointerToFunctionG, pointerToFunctionH),
-		objOrList(pointerToFunctionI),
-		objOrList(pointerToFunctionJ) };
+	//Create the list of ool s
+	ool arrayOfObjOrList[] = {
+		ool(pointerToFunctionA),
+		ool(pointerToFunctionB, pointerToFunctionC),
+		ool(pointerToFunctionD, pointerToFunctionE, pointerToFunctionF),
+		ool(pointerToFunctionG, pointerToFunctionH),
+		ool(pointerToFunctionI),
+		ool(pointerToFunctionJ) };
 
 	//Call looping function with size of list
 	atlasLoop(arrayOfObjOrList, 6);
@@ -325,10 +325,10 @@ int main()
 	//std::cout << "startets\n";
 	//atlasLoop(Standard, std::list<ActionObject>{myObject2, myObject4, myObject3, myObject5}, std::list<int>{});
 
-	objOrList arrToDesugar[] = { objOrList(pointerToReturnTrue), objOrList(pointerToFailThirds), objOrList(pointerToReturnTrue2) };
+	ool arrToDesugar[] = { ool(pointerToReturnTrue), ool(pointerToFailThirds), ool(pointerToReturnTrue2) };
 	ActionObject tempList[] = { ActionObject(pointerToFailThirds), ActionObject(pointerToReturnTrue2) };
 	loActionObject temploAO = loActionObject(tempList, 2);
-	objOrList arrToDesugar2[] = { objOrList(pointerToReturnTrue), objOrList(temploAO)};
+	ool arrToDesugar2[] = { ool(pointerToReturnTrue), ool(temploAO)};
 	std::list<ActionObject> results = deSugar(arrToDesugar, 3);
 	//std::cout << results.size() << "\n";
 	atlasLoop(results);
@@ -350,35 +350,25 @@ int main()
 
 
 
-	objOrList arrToDesugar3[] = { 
-		objOrList(pointerToReturnTrue), 
-		objOrList(pointerToFailThirds, pointerToReturnTrue2), 
-		objOrList(pointerToReturnTrue3, pointerToReturnTrue4, pointerToReturnTrue5), 
-		objOrList(pointerToReturnTrue6, pointerToReturnTrue7), 
-		objOrList(pointerToReturnTrue8), 
-		objOrList(pointerToReturnTrue9) };
+	ool arrToDesugar3[] = { 
+		ool(pointerToReturnTrue), 
+		ool(pointerToFailThirds, pointerToReturnTrue2), 
+		ool(pointerToReturnTrue3, pointerToReturnTrue4, pointerToReturnTrue5), 
+		ool(pointerToReturnTrue6, pointerToReturnTrue7), 
+		ool(pointerToReturnTrue8), 
+		ool(pointerToReturnTrue9) };
 	atlasLoop(arrToDesugar3, 6);
 
-	bool(*pointerToCountReturnTrue1)();
-	pointerToCountReturnTrue1 = &countReturnTrue1;
-	bool(*pointerToCountReturnTrue2)();
-	pointerToCountReturnTrue2 = &countReturnTrue2;
-	bool(*pointerToCountReturnTrue3)();
-	pointerToCountReturnTrue3 = &countReturnTrue3;
-	bool(*pointerToCountReturnTrue4)();
-	pointerToCountReturnTrue4 = &countReturnTrue4;
-	bool(*pointerToCountReturnTrue5)();
-	pointerToCountReturnTrue5 = &countReturnTrue5;
-	bool(*pointerToCountReturnTrue6)();
-	pointerToCountReturnTrue6 = &countReturnTrue6;
-	bool(*pointerToCountReturnTrue7)();
-	pointerToCountReturnTrue7 = &countReturnTrue7;
-	bool(*pointerToCountReturnTrue8)();
-	pointerToCountReturnTrue8 = &countReturnTrue8;
-	bool(*pointerToCountReturnTrue9)();
-	pointerToCountReturnTrue9 = &countReturnTrue9;
-	bool(*pointerToCountReturnTrue10)();
-	pointerToCountReturnTrue10 = &countReturnTrue10;
+	bool(*pointerToCountReturnTrue1)();pointerToCountReturnTrue1 = &countReturnTrue1;
+	bool(*pointerToCountReturnTrue2)();pointerToCountReturnTrue2 = &countReturnTrue2;
+	bool(*pointerToCountReturnTrue3)();pointerToCountReturnTrue3 = &countReturnTrue3;
+	bool(*pointerToCountReturnTrue4)();pointerToCountReturnTrue4 = &countReturnTrue4;
+	bool(*pointerToCountReturnTrue5)();pointerToCountReturnTrue5 = &countReturnTrue5;
+	bool(*pointerToCountReturnTrue6)();pointerToCountReturnTrue6 = &countReturnTrue6;
+	bool(*pointerToCountReturnTrue7)();pointerToCountReturnTrue7 = &countReturnTrue7;
+	bool(*pointerToCountReturnTrue8)();pointerToCountReturnTrue8 = &countReturnTrue8;
+	bool(*pointerToCountReturnTrue9)();pointerToCountReturnTrue9 = &countReturnTrue9;
+	bool(*pointerToCountReturnTrue10)();pointerToCountReturnTrue10 = &countReturnTrue10;
 
 	ActionObject objCntReturn1(countReturnTrue1);
 	ActionObject objCntReturn2(countReturnTrue2);
@@ -425,13 +415,3 @@ listOfactions templist4 = {templist1, templist2, templist3}
 loopme(templist4);
 
 */
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
