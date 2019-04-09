@@ -6,8 +6,8 @@
 #include <iterator>
 
 #define VERBOSE_FLAG false
-#define MAX_COUNT 500
-#define NUM_ITERATIONS 1000
+#define MAX_COUNT 10
+#define NUM_ITERATIONS 50
 
 bool atlasLoop(std::list<ActionObject> listActions, std::list<int> breakpointIndexesIn) {
 	return atlasLoop(Standard, listActions, breakpointIndexesIn);
