@@ -202,7 +202,9 @@ int main()
 	/*
 	BENJAMIN PRINT DURATIONS HERE, THIS IS START CODE
 	*/
+	
 	std::cout << "done";
+	/*
 	float total = 0;
 	for (int i = 0; i < NUM_ITERATIONS; i++) {
 		total += durations[i];
@@ -219,7 +221,7 @@ int main()
 	}
 	float stddevnat = sqrt(totaldevnat);
 	std::cout << "Std dev of natural:" << sqrt(totaldevnat) << ". \n";
-
+	*/
 	std::cout << "Starting our loop:\n";
 
 	bool(*pointerToCountReturnTrue1)();
@@ -265,6 +267,8 @@ int main()
 	/*
 	BENJAMIN PRINT DURATIONS2 HERE, it is our code
 	*/
+	
+	/*
 	std::cout << "done";
 	total = 0;
 	for (int i = 0; i < NUM_ITERATIONS; i++) {
@@ -282,6 +286,8 @@ int main()
 	std::cout << "Std dev of natural:" << sqrt(totaldev) << ". \n";
 
 	std::cout << "Conclusion: \n Avg nat: " << avgnat << "\n Avg our: " << (total / NUM_ITERATIONS) << "\n stddev nat: " << stddevnat << "\n stddev our: " << sqrt(totaldev);
+	*/
+	
 	/*
 	ActionObject myObject1;
 	bool(*pointerToReturnTrue)();
