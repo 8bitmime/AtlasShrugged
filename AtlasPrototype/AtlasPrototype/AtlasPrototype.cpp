@@ -199,6 +199,9 @@ int main()
 		durations[i] = duration;
 		std::cout << duration << "\n";
 	}
+	/*
+	BENJAMIN PRINT DURATIONS HERE, THIS IS START CODE
+	*/
 	std::cout << "done";
 	float total = 0;
 	for (int i = 0; i < NUM_ITERATIONS; i++) {
@@ -259,6 +262,9 @@ int main()
 		durations2[i] = duration;
 		std::cout << duration << "\n";
 	}
+	/*
+	BENJAMIN PRINT DURATIONS2 HERE, it is our code
+	*/
 	std::cout << "done";
 	total = 0;
 	for (int i = 0; i < NUM_ITERATIONS; i++) {
